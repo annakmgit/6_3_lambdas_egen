@@ -34,7 +34,7 @@ class LambdaTestNils {
 
         Measurable[] array = {f1, f2, f3, f4, f5, f6, f7};
 
-        // Adder example without any lambdas
+        // Adder example without any lambdas, this is the function I was asking about /Anna
         BinaryFunction adderNoLambda = new BinaryFunction() {
             public Measurable apply(Measurable a, Measurable b) { //
                 double sum = a.getValue() + b.getValue();

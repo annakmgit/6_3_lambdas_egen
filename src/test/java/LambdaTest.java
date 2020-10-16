@@ -76,7 +76,6 @@ class LambdaTest {
                     m2[l] = m2[k];
                 }
             }
-
             return m2;
         };
 
@@ -103,10 +102,25 @@ class LambdaTest {
                 new double[] { negativeValues[0].getValue(),
                         negativeValues[1].getValue()});
 
-        Reducer addition = null; // ToDo: Implement lambda for adding all values together
+
+        Reducer addition = (array2) -> {    // ToDo: Implement lambda for adding all values together
+
+            Measurable addition2 = new Measurable();
+
+            for (int i = 0; i < array2.length; i++) {
+
+                addition2 = addition2 + array2[i];
+
+                @Override
+                public double getValue() {
+                    return 0;
+                }
+            }
+            return f1;
+        };
+
 
         Measurable sumOfAllValues = addition.reduce(array);
-
         // EXPECTED sum: 1 -1 + 2 + 3 - 5 + 8 + 13 = 21
         assertEquals(21, sumOfAllValues.getValue());
     }
