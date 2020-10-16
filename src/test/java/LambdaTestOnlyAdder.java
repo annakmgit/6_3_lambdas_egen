@@ -44,7 +44,7 @@ class LambdaTestNilsOnlyAdder {
                 }
 
                 MeasurableExplicitClass measurableExplicitInstance = new MeasurableExplicitClass();
-                return measurableExplicitInstance;
+                return measurableExplicitInstance; //returns object of type Measurable that contains a double
             }
         }
 

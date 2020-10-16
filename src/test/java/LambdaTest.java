@@ -103,21 +103,28 @@ class LambdaTest {
                         negativeValues[1].getValue()});
 
 
-        Reducer addition = (array2) -> {    // ToDo: Implement lambda for adding all values together
+        //Reducer addition = (array2) -> {    // ToDo: Implement lambda for adding all values together
 
-            Measurable addition2 = new Measurable();
+        class AdderExplicitClass implements Reducer {
 
-            for (int i = 0; i < array2.length; i++) {
+        @Override
+        public Measurable reduce(Measurable[] arrayM){
+            double addition2 = 0;
 
-                addition2 = addition2 + array2[i];
+            for (int i = 0; i < arrayM.length; i++) {
+                Measurable m = array[i];
+                addition2 =addition2 +arrayM.getValue(m);
+                }
 
-                @Override
-                public double getValue() {
-                    return 0;
+            class testClass implements Measurable {
+                    @Override
+                    public double getValue() {
+                        return addition2;
+                    }
                 }
             }
-            return f1;
-        };
+            return 2;
+        }
 
 
         Measurable sumOfAllValues = addition.reduce(array);
