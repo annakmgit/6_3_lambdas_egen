@@ -4,8 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LambdaTest {
 
+    public static void main(String[] args) {
+        System.out.println("This is from the test main.");
+
+        testLambdas();
+    }
+    
     @Test
-    void testLambdas() {
+    static void testLambdas() {
 
         // As Measurable is a functional interface we can instantiate Measurables through lambdas instead
         // of actually implementing Measurables in a specific subclass
