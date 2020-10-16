@@ -98,9 +98,36 @@ class LambdaTestNilsOnlyAdder {
         // Everything is contained in one line!
         BinaryFunction adderTwoLayersOfLambdas = (a, b) -> () -> a.getValue() + b.getValue();
 
-        // -----------------------------------------------------
+// ------------------------------
 
-        // Now lets implement the other functions in the form of a two layer Lambda
+        // Create a simple test using only the adder in its different forms
+
+        // We need two Measurables to add. Create the first one using the explicit class way
+
+        // Define the class, note that it is really dumb, it will always just return the hard coded value '10'
+        class FirstNumberClass implements Measurable {
+            @Override
+            public double getValue() {
+                return 10;
+            }
+        }
+
+        // Create an instance of it.
+        FirstNumberClass firstNumber = new FirstNumberClass();
+
+        // For the second number, instead use the Lambda way of doing things.
+        Measurable secondNumber = () -> 20;
+
+        // Use one of the adder instances we created in example 1-4 above.
+        Measurable resultSimpleAdd = adderTwoLayersOfLambdas.apply(firstNumber, secondNumber);
+
+        System.out.println("Simple adder test equals = " + resultSimpleAdd.getValue());
+
+        assertEquals(30, resultSimpleAdd.getValue());
+
+// ------------------------------
+
+        // Now lets implement the other instances of BinaryFunction and UnaryFunction in the form of a two layer Lambda
 
         BinaryFunction subtractor = (a, b) -> () -> a.getValue() - b.getValue();
 
@@ -156,5 +183,6 @@ class LambdaTestNilsOnlyAdder {
         assertEquals(2, resultOneLayerOfLambdaAdder.getValue()); // Same for "1 layer lambda"
         assertEquals(2, resultTwoLayersOfLambdas.getValue()); // Final form with two layer of lambdas
 // ------------------------------
+
     }
 }
