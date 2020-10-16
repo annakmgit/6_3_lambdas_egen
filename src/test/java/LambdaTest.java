@@ -38,7 +38,10 @@ class LambdaTest {
 
         BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
 
-        BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
+        //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
+        BinaryFunction multiplier = new BinaryFunction;
+        multiplier.apply(Measurable m1, Measurable m2);
+
 
         UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
 

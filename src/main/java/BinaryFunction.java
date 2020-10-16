@@ -5,3 +5,8 @@ public interface BinaryFunction {
 
 
 }
+
+
+
+//A functional interface has only one abstract method
+// but it can have multiple default methods.
