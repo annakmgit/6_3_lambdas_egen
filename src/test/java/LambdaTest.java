@@ -1,4 +1,5 @@
-import org.junit.Test;
+import org.junit.jupiter.api.*; // This is Junit 5
+//import org.junit.Test;  // This is Junit 4. Do not use.
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,11 +8,17 @@ class LambdaTest {
     public static void main(String[] args) {
         System.out.println("This is from the test main.");
 
-        testLambdas();
+        // testLambdas();
     }
 
     @Test
-    static void testLambdas() {
+    public void nilsTest() {
+        assertEquals(2,1+1);
+        System.out.println("nilsTest");
+    }
+
+    @Test
+    public void testLambdas() {
 
         // As Measurable is a functional interface we can instantiate Measurables through lambdas instead
         // of actually implementing Measurables in a specific subclass
