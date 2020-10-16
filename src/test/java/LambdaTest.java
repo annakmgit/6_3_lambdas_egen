@@ -21,6 +21,7 @@ class LambdaTest {
         Measurable[] array = {f1, f2, f3, f4, f5, f6, f7};
 
         BinaryFunction adder = null; // ToDo: implement lambda which adds two Measurables
+        //BinaryFunction adder =
 
         BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
 
