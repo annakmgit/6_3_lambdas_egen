@@ -36,7 +36,7 @@ class LambdaTestNils {
 
         // Adder example without any lambdas
         BinaryFunction adderNoLambda = new BinaryFunction() {
-            public Measurable apply(Measurable a, Measurable b) {
+            public Measurable apply(Measurable a, Measurable b) { //
                 double sum = a.getValue() + b.getValue();
 
                 Measurable m = new Measurable() {

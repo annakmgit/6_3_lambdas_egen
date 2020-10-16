@@ -38,9 +38,9 @@ class LambdaTest {
 
         BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
 
-        //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
-        BinaryFunction multiplier = new BinaryFunction;
-        multiplier.apply(Measurable m1, Measurable m2);
+        BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
+        //BinaryFunction multiplier = new BinaryFunction;
+        //multiplier.apply(Measurable m1, Measurable m2);
 
 
         UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
@@ -55,7 +55,33 @@ class LambdaTest {
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
 
-        Filter filter = null;  // ToDo: implement lambda which filters the array according to a given predicate.
+        Filter filter = (m1, p) -> { //Is this really a Lambda expression?
+
+            int j = 0;
+            int l = 0;
+            int temp = m1.length;
+
+            for (int i = 0; i < temp; i++) {
+
+                if (p.test(m1[i])) {
+                    j++;
+                }
+            }
+
+            Measurable[] m2 = new Measurable[j];
+
+            for (int k = 0; k < temp; k++) {
+                if (p.test(m2[k])) {
+                    l++;
+                    m2[l] = m2[k];
+                }
+            }
+
+            return m2;
+        };
+
+
+        // ToDo: implement lambda which filters the array according to a given predicate.
         // As this will be a general-purpose method you could also put the
         // implementation in MeasurableUtils and utilize a method reference here
 
