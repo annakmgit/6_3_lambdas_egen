@@ -9,7 +9,7 @@ class LambdaTest {
 
         testLambdas();
     }
-    
+
     @Test
     static void testLambdas() {
 
