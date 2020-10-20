@@ -49,7 +49,7 @@ class LambdaTestNilsOnlyAdder {
         }
 
         // Now that we have defined a new class we have to create an instance of it.
-        AdderExplicitClass adderExplicitInstance = new AdderExplicitClass();
+        BinaryFunction adderExplicitInstance = new AdderExplicitClass();
 
         // --------
 
