@@ -46,7 +46,7 @@ class LambdaTest {
 
         public MeasurableUtils multiply(Measurable m5, Measurable m6) {
 
-            double result = m5.getValue() * m6.getValue();
+            double result = m5.getValue() * m6.getValue(); ho
 
             Measurable n = new Measurable() {
                 @Override
