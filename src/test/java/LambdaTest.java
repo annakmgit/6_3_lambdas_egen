@@ -24,10 +24,10 @@ class LambdaTest {
         // of actually implementing Measurables in a specific subclass
         // Disadvantage: Cannot implement toString(), equals(), etc for these instances
         Measurable f1 = () -> 1;  //f1.getValue  means it returns 1.
-        Measurable f2 = () -> -1;
+        Measurable f2 = () -> 1;
         Measurable f3 = () -> 2;  //since it's a functional interface there is only ONE method, creates anonymous class, () calls the only method
         Measurable f4 = () -> 3;
-        Measurable f5 = () -> -5;
+        Measurable f5 = () -> 5;
         Measurable f6 = () -> 8;
         Measurable f7 = () -> 13;
 
@@ -44,14 +44,9 @@ class LambdaTest {
         //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
         //multiplier.apply(Measurable m1, Measurable m2);
 
-        BinaryFunction multiplier = (Measurable m5, Measurable m6) -> MeasurableUtils.multiply(m5, m6);   //instansnamn på en anonym klass,
+        BinaryFunction multiplier = (Measurable m5, Measurable m6) -> MeasurableUtils.multiply(m5, m6);   //the instance name of anonymous class
 
-        //UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
-
-
-
-        UnaryFunction negator = (Measurable m8) ->
-
+        /*UnaryFunction negator = (Measurable m8) ->    //implements lambda which negates a Measurable
         {double value =  -1*(m8.getValue());
 
                 Measurable n = new Measurable() {
@@ -61,8 +56,9 @@ class LambdaTest {
                     }
                 };
                 return n;
-        };
+        };*/
 
+        UnaryFunction negator = (Measurable m8) -> () -> (m8.getValue()*-1);
 
        Measurable result = negator.apply(
                 multiplier.apply(
@@ -71,10 +67,12 @@ class LambdaTest {
                 )
         );
 
-       /*
+
 
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
+
+        /*
 
         Filter filter = (m1, p) -> { //Is this really a Lambda expression?
 
