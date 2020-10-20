@@ -44,19 +44,34 @@ class LambdaTest {
         //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
         //multiplier.apply(Measurable m1, Measurable m2);
 
-        BinaryFunction multiplier = (Measurable m5, Measurable m6) -> () -> MeasurableUtils.multiply(m5, m6);   //instansnamn på en anonym klass,
-            //return MeasurableUtils.multiply(m5, m6);
-            //return result;
-        //};
+        BinaryFunction multiplier = (Measurable m5, Measurable m6) -> MeasurableUtils.multiply(m5, m6);   //instansnamn på en anonym klass,
 
-        /*UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
+        //UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
 
-        Measurable result = negator.apply(
+
+
+        UnaryFunction negator = (Measurable m8) ->
+
+        {double value =  -1*(m8.getValue());
+
+                Measurable n = new Measurable() {
+                    @Override
+                    public double getValue() {
+                        return value;
+                    }
+                };
+                return n;
+        };
+
+
+       Measurable result = negator.apply(
                 multiplier.apply(
                         adder.apply(f1, f2),
                         subtractor.apply(f3, f4)
                 )
         );
+
+       /*
 
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
