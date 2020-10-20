@@ -44,18 +44,10 @@ class LambdaTest {
         //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
         //multiplier.apply(Measurable m1, Measurable m2);
 
-        BinaryFunction Class1 = (Measurable m5, Measurable m6) -> {
-            double result = multiply(m5, m6);
-
-            Measurable n = new Measurable() {
-                @Override
-                public double getValue() {
-                    return result;
-                }
-            };
-            return n;
-        }
-    };
+        BinaryFunction multiplier = (Measurable m5, Measurable m6) -> () -> MeasurableUtils.multiply(m5, m6);   //instansnamn på en anonym klass,
+            //return MeasurableUtils.multiply(m5, m6);
+            //return result;
+        //};
 
         /*UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
 
