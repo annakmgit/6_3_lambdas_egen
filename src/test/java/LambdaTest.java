@@ -23,27 +23,43 @@ class LambdaTest {
         // As Measurable is a functional interface we can instantiate Measurables through lambdas instead
         // of actually implementing Measurables in a specific subclass
         // Disadvantage: Cannot implement toString(), equals(), etc for these instances
-        Measurable f1 = () -> 1;
-        Measurable f2 = () -> 1;
-        Measurable f3 = () -> 2;
+        Measurable f1 = () -> 1;  //f1.getValue  means it returns 1.
+        Measurable f2 = () -> -1;
+        Measurable f3 = () -> 2;  //since it's a functional interface there is only ONE method, creates anonymous class, () calls the only method
         Measurable f4 = () -> 3;
-        Measurable f5 = () -> 5;
+        Measurable f5 = () -> -5;
         Measurable f6 = () -> 8;
         Measurable f7 = () -> 13;
 
         Measurable[] array = {f1, f2, f3, f4, f5, f6, f7};
 
-        BinaryFunction adder = null; // ToDo: implement lambda which adds two Measurables
-        //BinaryFunction adder =
+        //BinaryFunction adder = null; // ToDo: implement lambda which adds two Measurables
+        BinaryFunction adder = (Measurable m1, Measurable m2) -> () -> m1.getValue() + m2.getValue();
 
-        BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
+        //BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
+        BinaryFunction subtractor = (Measurable m3, Measurable m4) -> () -> m3.getValue() - m4.getValue();
 
-        BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
-        //BinaryFunction multiplier = new BinaryFunction;
+
+        //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
         //multiplier.apply(Measurable m1, Measurable m2);
+        BinaryFunction multiplier = new BinaryFunction;
+
+        public MeasurableUtils multiply(Measurable m5, Measurable m6) {
+
+            double result = m5.getValue() * m6.getValue();
+
+            Measurable n = new Measurable() {
+                @Override
+                public double getValue() {
+                    return result;
+                }
+            };
+            return n;
+        }
+    };
 
 
-        UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
+        /*UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
 
         Measurable result = negator.apply(
                 multiplier.apply(
@@ -100,12 +116,10 @@ class LambdaTest {
         assertEquals(2, negativeValues.length);
         assertArrayEquals(new double[] {-f2.getValue(),-f5.getValue()},
                 new double[] { negativeValues[0].getValue(),
-                        negativeValues[1].getValue()});
+                        negativeValues[1].getValue()});*/
 
 
-        Reducer addition = new AdderExplicitClass();                    // ToDo: Implement lambda for adding all values together
-
-        class AdderExplicitClass implements Reducer {
+      /*  class AdditionExplicitClass implements Reducer {
 
             @Override
             public Measurable reduce(Measurable[] arrayM) {
@@ -113,8 +127,31 @@ class LambdaTest {
 
                 for (int i = 0; i < arrayM.length; i++) {
                     Measurable m = array[i];
+                    sum = (sum) + (m.getValue());
+                    System.out.println("sum: " + sum);
+                }
+
+                final double sum2 = sum;
+
+                class n implements Measurable {
+                    @Override
+                    public double getValue() {
+                        return sum2;
+                    }
+                };
+                n m = new n();
+                return m;
+            }
+        };*/
+
+        /*Reducer AdditionExplicitClass2 = new Reducer() {    //this is a version with an anonymous class
+            public Measurable reduce(Measurable[] arrayM) {
+                double sum = 0;
+
+                for (int i = 0; i < arrayM.length; i++) {
+                    Measurable m = array[i];
                     sum = sum + m.getValue();
-                    final double sum2 = sum;
+
                 }
 
                 final double sum2 = sum;
@@ -127,9 +164,27 @@ class LambdaTest {
                 };
                 return n;
             }
-        };
+        };*/
 
-        Measurable sumOfAllValues = addition.reduce(array);
+        Reducer AdditionExplicitClass3 = (Measurable[] arrayM) ->
+            {   double sum = 0;
+                for (int i = 0; i < arrayM.length; i++) {
+                    Measurable m = array[i];
+                    sum = sum + m.getValue();
+                }
+                final double sum2 = sum;
+
+                Measurable n = new Measurable() {
+                    @Override
+                    public double getValue() {
+                        return sum2;
+                    }
+                };
+                return n;
+            };
+
+        //Reducer addition = new AdditionExplicitClass();                    // ToDo: Implement lambda for adding all values together
+        Measurable sumOfAllValues = AdditionExplicitClass3.reduce(array); //do not need to use addition here
         //EXPECTED sum: 1 -1 + 2 + 3 - 5 + 8 + 13 = 21
         assertEquals(21, sumOfAllValues.getValue());
     }
