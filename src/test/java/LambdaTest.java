@@ -34,19 +34,18 @@ class LambdaTest {
         Measurable[] array = {f1, f2, f3, f4, f5, f6, f7};
 
         //BinaryFunction adder = null; // ToDo: implement lambda which adds two Measurables
-        BinaryFunction adder = (Measurable m1, Measurable m2) -> () -> m1.getValue() + m2.getValue();
+        BinaryFunction adder = (Measurable m1, Measurable m2) -> () -> m1.getValue() + m2.getValue();   //first parenthise will be the only function in a binary function : apply
+        //after the first arrow, the only function what it will return. Second level lambda.
+        //after second arrow, get value in the measurable som man håller på att returna i sin binary function.apply
 
         //BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
         BinaryFunction subtractor = (Measurable m3, Measurable m4) -> () -> m3.getValue() - m4.getValue();
 
-
         //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
         //multiplier.apply(Measurable m1, Measurable m2);
-        BinaryFunction multiplier = new BinaryFunction;
 
-        public MeasurableUtils multiply(Measurable m5, Measurable m6) {
-
-            double result = m5.getValue() * m6.getValue(); ho
+        BinaryFunction Class1 = (Measurable m5, Measurable m6) -> {
+            double result = multiply(m5, m6);
 
             Measurable n = new Measurable() {
                 @Override
@@ -57,7 +56,6 @@ class LambdaTest {
             return n;
         }
     };
-
 
         /*UnaryFunction negator = null; // ToDo: implement lambda which negates a Measurable
 
