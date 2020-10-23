@@ -163,7 +163,7 @@ class LambdaTest {
             }
         };
 
-        /*Reducer AdditionExplicitClass2 = new Reducer() {    //this is a version with an anonymous class
+        Reducer AdditionExplicitClass2 = new Reducer() {    //this is a version with an anonymous class
             public Measurable reduce(Measurable[] arrayM) {
                 double sum = 0;
 
@@ -183,7 +183,7 @@ class LambdaTest {
                 };
                 return n;
             }
-        };*/
+        };
 
        Reducer AdditionExplicitClass3 = (Measurable[] arrayM) ->
             {   double sum = 0;
