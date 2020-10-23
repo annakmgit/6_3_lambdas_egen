@@ -1,9 +1,9 @@
-import org.junit.jupiter.api.*; // This is Junit 5
-//import org.junit.Test;  // This is Junit 4. Do not use.
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class LambdaTest {
+class LambdaTestClean {
 
     public static void main(String[] args) {
         System.out.println("This is from the test main.");
@@ -17,17 +17,9 @@ class LambdaTest {
         System.out.println("nilsTest");
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
     @Test
     public void testLambdas() {
 
-        // As Measurable is a functional interface we can instantiate Measurables through lambdas instead
-        // of actually implementing Measurables in a specific subclass
-        // Disadvantage: Cannot implement toString(), equals(), etc for these instances
         Measurable f1 = () -> 1;  //f1.getValue  means it returns 1.
         Measurable f2 = () -> 1;
         Measurable f3 = () -> 2;  //since it's a functional interface there is only ONE method, creates anonymous class, () calls the only method
@@ -38,30 +30,12 @@ class LambdaTest {
 
         Measurable[] array = {f1, f2, f3, f4, f5, f6, f7};
 
-        //BinaryFunction adder = null; // ToDo: implement lambda which adds two Measurables
-        BinaryFunction adder = (Measurable m1, Measurable m2) -> () -> m1.getValue() + m2.getValue();   //first parenthise will be the only function in a binary function : apply
-        //after the first arrow, the only function what it will return. Second level lambda.
-        //after second arrow, get value in the measurable som man håller på att returna i sin binary function.apply
+        BinaryFunction adder = (Measurable m1, Measurable m2) -> () -> m1.getValue() + m2.getValue();
 
-        //BinaryFunction subtractor = null; // ToDo: implement lambda which subtracts two Measurables
         BinaryFunction subtractor = (Measurable m3, Measurable m4) -> () -> m3.getValue() - m4.getValue();
-
-        //BinaryFunction multiplier = null; // ToDo:  utilize method reference from MeasurableUtils
-        //multiplier.apply(Measurable m1, Measurable m2);
 
         BinaryFunction multiplier = (Measurable m5, Measurable m6) -> MeasurableUtils.multiply(m5, m6);   //the instance name of anonymous class
 
-        /*UnaryFunction negator = (Measurable m8) ->    //implements lambda which negates a Measurable
-        {double value =  -1*(m8.getValue());
-
-                Measurable n = new Measurable() {
-                    @Override
-                    public double getValue() {
-                        return value;
-                    }
-                };
-                return n;
-        };*/
         UnaryFunction negator = (Measurable m8) -> () -> (m8.getValue()*-1);
 
        Measurable result = negator.apply(
@@ -74,12 +48,9 @@ class LambdaTest {
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
 
+        UnaryFunction filterClass = new UnaryFunction(){
 
-        Filter filter = (m1, p) -> { //Is this really a Lambda expression?
-
-            class instanceOfMeasurable implements Filter{
-                @Override
-                public Measurable[] apply(Measurable[] m1, Predicate p){
+            public Filter apply(Measurable[] m1, Predicate predicate){
 
                     int j = 0;
                     int l = 0;
@@ -87,7 +58,7 @@ class LambdaTest {
 
                     for (int i = 0; i < temp; i++) {
 
-                        if (p.test(m1[i])) {
+                        if (predicate.test(m1[i])) {
                             j++;
                         }
                     }
@@ -95,15 +66,13 @@ class LambdaTest {
                     Measurable[] m2 = new Measurable[j];
 
                     for (int k = 0; k < temp; k++) {
-                        if (p.test(m2[k])) {
+                        if (predicate.test(m2[k])) {
                             l++;
                             m2[l] = m2[k];
                         }
                     }
                     return m2;
                 }
-            }
-
 
             class instanceOfPredicate implements Predicate {
                 @Override
@@ -118,7 +87,7 @@ class LambdaTest {
         // As this will be a general-purpose method you could also put the
         // implementation in MeasurableUtils and utilize a method reference here
 
-        Measurable[] moreThan5 = filter.apply(array, p); // ToDo: implement predicate lambda which accepts
+        Measurable[] moreThan5 = filter.apply(array, instanceOfPredicate); // ToDo: implement predicate lambda which accepts
         // Measurables with values > 5
 
         // EXPECTED array after filtering: [f6, f7]
@@ -162,28 +131,6 @@ class LambdaTest {
                 return m;
             }
         };
-
-        /*Reducer AdditionExplicitClass2 = new Reducer() {    //this is a version with an anonymous class
-            public Measurable reduce(Measurable[] arrayM) {
-                double sum = 0;
-
-                for (int i = 0; i < arrayM.length; i++) {
-                    Measurable m = array[i];
-                    sum = sum + m.getValue();
-
-                }
-
-                final double sum2 = sum;
-
-                Measurable n = new Measurable() {
-                    @Override
-                    public double getValue() {
-                        return sum2;
-                    }
-                };
-                return n;
-            }
-        };*/
 
        Reducer AdditionExplicitClass3 = (Measurable[] arrayM) ->
             {   double sum = 0;
