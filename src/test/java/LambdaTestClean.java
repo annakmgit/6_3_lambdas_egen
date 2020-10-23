@@ -5,18 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LambdaTestClean {
 
-    public static void main(String[] args) {
-        System.out.println("This is from the test main.");
-
-        // testLambdas();
-    }
-
-    @Test
-    public void nilsTest() {
-        assertEquals(2,1+1);
-        System.out.println("nilsTest");
-    }
-
     @Test
     public void testLambdas() {
 
@@ -48,9 +36,9 @@ class LambdaTestClean {
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
 
-        UnaryFunction filter = new UnaryFunction(){
-
-            public Filter apply(Measurable[] m1, Predicate predicate){
+        Filter filter = new Filter(){
+            @Override
+            public Measurable[] apply(Measurable[] m1, Predicate predicate){
 
                     int j = 0;
                     int l = 0;
@@ -62,9 +50,7 @@ class LambdaTestClean {
                             j++;
                         }
                     }
-
                     Measurable[] m2 = new Measurable[j];
-
                     for (int k = 0; k < temp; k++) {
                         if (predicate.test(m2[k])) {
                             l++;
