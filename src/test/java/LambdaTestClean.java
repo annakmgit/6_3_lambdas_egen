@@ -59,16 +59,15 @@ class LambdaTestClean {
                 }
                 return m2;
             }
-
-            Predicate predicate = new Predicate(){
-                @Override
-                public boolean test(Measurable m){
-                    if (m.getValue() > 5) return true;
-                    return false;
-                };
-            };
         };
 
+        Predicate predicate = new Predicate(){
+            @Override
+            public boolean test(Measurable m){
+                if (m.getValue() > 5) return true;
+                return false;
+            };
+        };
 
         Measurable[] moreThan5 = filter.apply(array, predicate); // accepts Measurables with values > 5
 
@@ -79,15 +78,25 @@ class LambdaTestClean {
         // Negate f2 and f5
         array[1] = negator.apply(array[1]);
         array[4] = negator.apply(array[4]);
-        //Measurable[] negativeValues = filter.apply(array, null); // ToDo: utilize method reference from MeasurableUtils
+
+        Predicate predicateNeg = new Predicate(){
+            @Override
+            public boolean test(Measurable m){
+                if (m.getValue() < 0) return true;
+                return false;
+            };
+        };
+
+
+        Measurable[] negativeValues = filter.apply(array, predicateNeg); // ToDo: utilize method reference from MeasurableUtils
         // to only keep the negative values
 
         // EXPECTED array after filtering: [-f2, -f5]
-        /*assertEquals(2, negativeValues.length);
+        assertEquals(2, negativeValues.length);
         assertArrayEquals(new double[] {-f2.getValue(),-f5.getValue()},
                 new double[] { negativeValues[0].getValue(),
                         negativeValues[1].getValue()});
-*/
+
 
       class AdditionExplicitClass implements Reducer {
 
