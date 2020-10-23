@@ -48,7 +48,7 @@ class LambdaTestClean {
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
 
-        UnaryFunction filterClass = new UnaryFunction(){
+        UnaryFunction filter = new UnaryFunction(){
 
             public Filter apply(Measurable[] m1, Predicate predicate){
 
@@ -74,7 +74,7 @@ class LambdaTestClean {
                     return m2;
                 }
 
-            class instanceOfPredicate implements Predicate {
+            class predicate implements Predicate {
                 @Override
                 public boolean test(Measurable m){
                     if (m.getValue() > 5) return true;
@@ -87,7 +87,7 @@ class LambdaTestClean {
         // As this will be a general-purpose method you could also put the
         // implementation in MeasurableUtils and utilize a method reference here
 
-        Measurable[] moreThan5 = filter.apply(array, instanceOfPredicate); // ToDo: implement predicate lambda which accepts
+        Measurable[] moreThan5 = filter.apply(array, predicate); // ToDo: implement predicate lambda which accepts
         // Measurables with values > 5
 
         // EXPECTED array after filtering: [f6, f7]
