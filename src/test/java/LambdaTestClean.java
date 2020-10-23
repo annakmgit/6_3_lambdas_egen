@@ -36,9 +36,20 @@ class LambdaTestClean {
         // EXPECTED result after applying lambdas: -((1+1)*(2-3)) => -(2*-1) => -(-2) => 2
         assertEquals(2, result.getValue());
 
-        Filter filter = new Filter(){
+        /*Predicate predicate = new Predicate(){
             @Override
-            public Measurable[] apply(Measurable[] m1, Predicate predicate) {
+            public boolean test(Measurable m){
+                if (m.getValue() > 5) return true;
+                return false;
+            };
+        };*/
+
+        Predicate predicate = (Measurable m) -> (m.getValue() > 5);
+
+        Predicate predicateNeg = (Measurable mNeg) -> (mNeg.getValue() < 0);
+
+        Filter filter = (Measurable[] m1, Predicate predicateInFilter) -> {
+            {
 
                 int j = 0;
                 int l = 0;
@@ -61,31 +72,39 @@ class LambdaTestClean {
             }
         };
 
-        Predicate predicate = new Predicate(){
+/*          Filter filter = new Filter(){
             @Override
-            public boolean test(Measurable m){
-                if (m.getValue() > 5) return true;
-                return false;
-            };
-        };
+            public Measurable[] apply(Measurable[] m1, Predicate predicate) {
+
+                int j = 0;
+                int l = 0;
+                int temp = m1.length;
+
+                for (int i = 0; i < temp; i++) {
+
+                    if (predicate.test(m1[i])) {
+                        j++;
+                    }
+                }
+                Measurable[] m2 = new Measurable[j];
+                for (int k = 0; k < temp; k++) {
+                    if (predicate.test(m2[k])) {
+                        l++;
+                        m2[l] = m2[k];
+                    }
+                }
+                return m2;
+            }
+        };*/
 
         Measurable[] moreThan5 = filter.apply(array, predicate); // accepts Measurables with values > 5
 
         // EXPECTED array after filtering: [f6, f7]
         assertArrayEquals(new Measurable[] {f6, f7}, moreThan5);
 
-
         // Negate f2 and f5
         array[1] = negator.apply(array[1]);
         array[4] = negator.apply(array[4]);
-
-        Predicate predicateNeg = new Predicate(){
-            @Override
-            public boolean test(Measurable m){
-                if (m.getValue() < 0) return true;
-                return false;
-            };
-        };
 
 
         Measurable[] negativeValues = filter.apply(array, predicateNeg); // ToDo: utilize method reference from MeasurableUtils
