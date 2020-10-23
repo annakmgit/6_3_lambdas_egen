@@ -38,43 +38,39 @@ class LambdaTestClean {
 
         Filter filter = new Filter(){
             @Override
-            public Measurable[] apply(Measurable[] m1, Predicate predicate){
+            public Measurable[] apply(Measurable[] m1, Predicate predicate) {
 
-                    int j = 0;
-                    int l = 0;
-                    int temp = m1.length;
+                int j = 0;
+                int l = 0;
+                int temp = m1.length;
 
-                    for (int i = 0; i < temp; i++) {
+                for (int i = 0; i < temp; i++) {
 
-                        if (predicate.test(m1[i])) {
-                            j++;
-                        }
+                    if (predicate.test(m1[i])) {
+                        j++;
                     }
-                    Measurable[] m2 = new Measurable[j];
-                    for (int k = 0; k < temp; k++) {
-                        if (predicate.test(m2[k])) {
-                            l++;
-                            m2[l] = m2[k];
-                        }
-                    }
-                    return m2;
                 }
+                Measurable[] m2 = new Measurable[j];
+                for (int k = 0; k < temp; k++) {
+                    if (predicate.test(m2[k])) {
+                        l++;
+                        m2[l] = m2[k];
+                    }
+                }
+                return m2;
+            }
 
-            class predicate implements Predicate {
+            Predicate predicate = new Predicate(){
                 @Override
                 public boolean test(Measurable m){
                     if (m.getValue() > 5) return true;
                     return false;
-                }
-            }
+                };
+            };
         };
 
-        // ToDo: implement lambda which filters the array according to a given predicate.
-        // As this will be a general-purpose method you could also put the
-        // implementation in MeasurableUtils and utilize a method reference here
 
-        Measurable[] moreThan5 = filter.apply(array, predicate); // ToDo: implement predicate lambda which accepts
-        // Measurables with values > 5
+        Measurable[] moreThan5 = filter.apply(array, predicate); // accepts Measurables with values > 5
 
         // EXPECTED array after filtering: [f6, f7]
         assertArrayEquals(new Measurable[] {f6, f7}, moreThan5);
